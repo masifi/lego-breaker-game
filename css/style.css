@@ -114,6 +114,7 @@ body,*{
     box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.1) inset;
 }
 #sound{
+    font-size: 1em;
     text-align: center;
     padding: 10px;
     width: 200px;
@@ -121,10 +122,20 @@ body,*{
     box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.1) inset;
 }
 #game_control{
-    padding: 10px;
+    padding: 0px;
     float: left;
-    width: 100px;
+    width: 120px;
+    margin: 0 10px;
 }
+#game_control h3{
+    font-size: 1em;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 120px;
+    background: #eee;
+    box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.1) inset;
+}
+
 #game_control #sound, #game_control h3{
     margin: 5px 0px;
 }
@@ -145,22 +156,33 @@ body,*{
     -o-transform: rotateX(180deg);
     transform: rotateX(180deg);
 }
-.bars{
+.bars{box-sizing: border-box;
     display: block;
     width: 20px;
-     float: left;  
-    /* height: 100px; */
-    vertical-align: bottom;
-    font-size: 8pt;
+    float: left;  
+    line-height: 1.6em;
+    text-align: center;
+    font-size: 9pt;
     text-align: center;
     -webkit-transform: rotateX(180deg);
     -ms-transform: rotateX(180deg);
     -o-transform: rotateX(180deg);
     transform: rotateX(180deg);
     /* box-shadow:0px 0px 0px 5px rgba(0,0,0,0.1) inset; */
+    color: #fff;
+    position: relative;
 }
-.bars::after{
+.bars span{
     content: " ";
+    position: relative;
+    display: block;
+    background-color: inherit;
+    box-shadow: 0px 0px 20px inset rgba(0,0,0,.2);
+    border-radius: 5px;
+    height: 20px;
+    width: 100%;
+    top: -10px;
+    z-index: 0;
 }
 #game_control #sound{
     width: 120px;
