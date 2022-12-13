@@ -147,10 +147,10 @@ function destroy(id, color) {
 function updateHistogram() {
     let bars=document.getElementById("histogram").getElementsByClassName("bars");
     for (let i = 0; i < bars.length; i++) {
+        let new_height = histogram[i]* 5;
         bars[i].style.background= "#"+colors[i];
-        bars[i].style.height=histogram[i]* 5 +"px";
-        bars[i].innerHTML=histogram[i];
-        bars[i].style.verticalAlign="bottom";
+        bars[i].style.height= new_height < 10 ? "10px" : new_height+"px";
+        bars[i].innerHTML=`<span>${histogram[i]}</span>`;
     }
 
 }
