@@ -19,16 +19,17 @@ let WIDTH = 10,
 
 function load() {
   colors = ["f44336", "9C27B0", "03A9F4", "4CAF50", "FF9800"];
-  let col = document.getElementsByClassName('col');
+  let col = document.getElementsByClassName("col");
   let blocks, color, id;
   histogram = [0, 0, 0, 0, 0];
   for (let i = 0; i < WIDTH; i++) {
     blocks = "";
     id = "";
     for (let j = 0; j < HEIGHT; j++) {
-      id = (i + 1) + "-" + (j + 1);
-      color = colors[(Math.floor(Math.random() * colors.length) + j) % colors.length];
-      blocks += "<div style='background:#" + color + "' name='" + color + "' id='" + id + "' onclick='destroy(this.id,\"" + color + "\")' class='blocks'>" + "</div>";
+      id = i + 1 + "-" + (j + 1);
+      color =
+        colors[(Math.floor(Math.random() * colors.length) + j) % colors.length];
+      blocks += `<div style="background:#${color}" name="${color}" id="${id}" onclick="destroy(this.id,'${color}')" class='blocks'></div>`;
       histogram[colors.indexOf(color)]++;
     }
     col[i].innerHTML = blocks;
@@ -55,7 +56,7 @@ function remove() {
       //index++;
     }
     // TODO: removing elements with animation.
-    //if(index== nodes.length){	
+    //if(index== nodes.length){
     //clearInterval(removeLoop);
     //glassbreak.pause();
     //glassbreak.currentTime=0;
@@ -64,15 +65,16 @@ function remove() {
     score_cont.innerHTML = score;
     temp_score_cont.style.display = "none";
     nodes = [];
-    let rows, cols, isEmpty = 0;
+    let rows,
+      cols,
+      isEmpty = 0;
     cols = document.getElementById("game_board").getElementsByClassName("col");
     histogram = [0, 0, 0, 0, 0];
     for (let i = 0; i < cols.length; i++) {
       rows = cols[i].getElementsByClassName("blocks");
-      if (rows.length == 0)
-        isEmpty++;
+      if (rows.length == 0) isEmpty++;
       for (let j = 0; j < rows.length; j++) {
-        rows[j].id = ((i - isEmpty) + 1) + "-" + (j + 1);
+        rows[j].id = i - isEmpty + 1 + "-" + (j + 1);
         let color = rows[j].getAttribute("name");
         histogram[colors.indexOf(color)]++;
       }
@@ -81,39 +83,63 @@ function remove() {
     //}
   }
 }
-let hileight = function(x, y, color) {
-  let xpp, xmm, ypp, ymm, notFound = false;
-  xpp = (x + 1) > 10 ? 10 : x + 1;
-  xmm = (x - 1) < 1 ? 1 : x - 1;
-  ypp = (y + 1) > 10 ? 10 : y + 1;
-  ymm = (y - 1) < 1 ? 1 : y - 1;
+let hileight = function (x, y, color) {
+  let xpp,
+    xmm,
+    ypp,
+    ymm,
+    notFound = false;
+  xpp = x + 1 > 10 ? 10 : x + 1;
+  xmm = x - 1 < 1 ? 1 : x - 1;
+  ypp = y + 1 > 10 ? 10 : y + 1;
+  ymm = y - 1 < 1 ? 1 : y - 1;
 
-  let bt = document.getElementById((x) + "-" + (ypp));
-  let bb = document.getElementById((x) + "-" + (ymm));
-  let bl = document.getElementById((xmm) + "-" + (y));
-  let br = document.getElementById((xpp) + "-" + (y));
+  let bt = document.getElementById(x + "-" + ypp);
+  let bb = document.getElementById(x + "-" + ymm);
+  let bl = document.getElementById(xmm + "-" + y);
+  let br = document.getElementById(xpp + "-" + y);
 
-  if ((bt != undefined) && (bt.getAttribute("name") == color) && (ypp != y) && (nodes.indexOf(bt) < 0)) {
+  if (
+    bt != undefined &&
+    bt.getAttribute("name") == color &&
+    ypp != y &&
+    nodes.indexOf(bt) < 0
+  ) {
     nodes.push(bt);
     notFound = true;
     hileight(x, ypp, color);
   }
-  if ((bb != undefined) && (bb.getAttribute("name") == color) && (ymm != y) && (nodes.indexOf(bb) < 0)) {
+  if (
+    bb != undefined &&
+    bb.getAttribute("name") == color &&
+    ymm != y &&
+    nodes.indexOf(bb) < 0
+  ) {
     nodes.push(bb);
     notFound = true;
     hileight(x, ymm, color);
   }
-  if ((bl != undefined) && (bl.getAttribute("name") == color) && (xmm != x) && (nodes.indexOf(bl) < 0)) {
+  if (
+    bl != undefined &&
+    bl.getAttribute("name") == color &&
+    xmm != x &&
+    nodes.indexOf(bl) < 0
+  ) {
     nodes.push(bl);
     notFound = true;
     hileight(xmm, y, color);
   }
-  if ((br != undefined) && (br.getAttribute("name") == color) && (xpp != x) && (nodes.indexOf(br) < 0)) {
+  if (
+    br != undefined &&
+    br.getAttribute("name") == color &&
+    xpp != x &&
+    nodes.indexOf(br) < 0
+  ) {
     nodes.push(br);
     notFound = true;
     hileight(xpp, y, color);
   }
-}
+};
 
 function destroy(id, color) {
   let x, y, xpp, xmm, ypp, ymm;
@@ -137,23 +163,25 @@ function destroy(id, color) {
       if (sound.value == 1) blockhover.play();
       for (let i = 0; i < nodes.length; i++) {
         nodes[i].style.opacity = "0.6";
-        temp_score += (5 * nodes.length);
+        temp_score += 5 * nodes.length;
       }
       temp_score_cont.style.display = "inline-block";
-      temp_score_cont.innerHTML = nodes.length + " Blocks " + temp_score + " Points";
+      temp_score_cont.innerHTML =
+        nodes.length + " Blocks " + temp_score + " Points";
     }
   }
 }
 
 function updateHistogram() {
-  let bars = document.getElementById("histogram").getElementsByClassName("bars");
+  let bars = document
+    .getElementById("histogram")
+    .getElementsByClassName("bars");
   for (let i = 0; i < bars.length; i++) {
     let new_height = histogram[i] * 5;
     bars[i].style.background = "#" + colors[i];
     bars[i].style.height = new_height < 5 ? "1px" : new_height + "px";
     bars[i].innerHTML = `<span>${histogram[i]}</span>`;
   }
-
 }
 
 function mute() {
